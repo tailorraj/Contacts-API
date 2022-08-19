@@ -144,7 +144,19 @@ app_license = "MIT"
 
 # User Data Protection
 # --------------------
-
+fixtures = [
+    {"dt": "Custom Field", "filters": [
+        [
+            "name", "in", ["Contact Phone-is_whatsapp_no_ak","Contact-items"
+            ]
+        ]
+    ]},
+	{"dt": "Role", "filters": [
+        [
+            "name", "in", ["Whatsapp API Caller"]
+        ]
+    ]}
+]
 user_data_fields = [
 	{
 		"doctype": "{doctype_1}",
