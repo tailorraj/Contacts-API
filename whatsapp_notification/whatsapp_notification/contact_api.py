@@ -428,7 +428,7 @@ def get_contacts_item_v2():
                 })
     return contact_response
 
-@frappe.whitelist()
+
 def get_subgroup_contact_v2(item):
     data = []
     subgrp = frappe.db.get_value("Item",item,"sub_group") 
@@ -442,7 +442,6 @@ def get_subgroup_contact_v2(item):
             left join `tabDynamic Link` cdl on cp.parent = cdl.parent
             left join `tabContact` cc on cp.parent = cc.name
             left join `tabContact Sub Group` ccsg on ccsg.parent = cc.name
-            left join `tabItem` i on i.name = ci.item
             where
             ccsg.sub_group = %s
             and
@@ -459,7 +458,7 @@ def get_subgroup_contact_v2(item):
 # ---------------------support function-------------------------------
 def get_available_items():
     available_item = frappe.db.sql("""
-    select bn.item_code,bn.warehouse,bn.actual_qty,bn.reserved_qty,it.group,it.sub_group from `tabBin` bn inner join `tabItem` it on it.name = bn.item_code where bn.actual_qty > 0
+    select bn.item_code,it.item_name,bn.warehouse,bn.actual_qty,bn.reserved_qty,it.group,it.sub_group from `tabBin` bn inner join `tabItem` it on it.name = bn.item_code where bn.actual_qty > 0
     """,as_dict=1)
     return available_item
 
