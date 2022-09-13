@@ -147,7 +147,7 @@ app_license = "MIT"
 fixtures = [
     {"dt": "Custom Field", "filters": [
         [
-            "name", "in", ["Contact Phone-is_whatsapp_no_ak","Contact-items"
+            "name", "in", ["Contact Phone-is_whatsapp_no_ak","Contact-items","Contact-sub_group"
             ]
         ]
     ]},
