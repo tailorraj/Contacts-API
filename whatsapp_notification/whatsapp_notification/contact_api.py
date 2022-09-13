@@ -326,7 +326,7 @@ def get_invoiced_contact_v2(item):
                 and
                 cp.is_whatsapp_no_ak = 1
                 and
-                sii.item_code in %(l)s
+                sii.item_code in %(l)s group by cp.phone,sii.item_code
                 order by si.name
                 """, ({"l":tuple(s_l)}),as_dict = True)
             return data
