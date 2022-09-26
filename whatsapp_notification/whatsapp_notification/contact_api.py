@@ -282,6 +282,7 @@ def get_sales_contact_v2():
                 "warehouse": item.warehouse,
                 "actual_qty": item.actual_qty,
                 "reserved_qty": item.reserved_qty,
+                "rem_qty": item.rem_qty,
                 "group": item.group,
                 "sub_group": item.sub_group,
                 "invoiced_item_code":contact.item_code,
@@ -421,6 +422,7 @@ def get_contacts_item_v2():
                     "warehouse":item.warehouse,
                     "actual_qty":item.actual_qty,
                     "reserved_qty":item.reserved_qty,
+                    "rem_qty": item.rem_qty,
                     "group":item.group,
                     "sub_group":item.sub_group,
                     "contact_name":contact.contact_name,
@@ -457,9 +459,13 @@ def get_subgroup_contact_v2(item):
 
 # ---------------------support function-------------------------------
 def get_available_items():
+    min_qty = frappe.db.get_single_value('Custom Stock Setting', 'min_qty')
+    cond = ""
+    if min_qty:
+        cond = "and (bn.actual_qty - bn.reserved_qty) > " + str(min_qty)
     available_item = frappe.db.sql("""
-    select bn.item_code,it.item_name,bn.warehouse,bn.actual_qty,bn.reserved_qty,it.group,it.sub_group from `tabBin` bn inner join `tabItem` it on it.name = bn.item_code where bn.actual_qty > 0
-    """,as_dict=1)
+    select bn.item_code,it.item_name,bn.warehouse,bn.actual_qty,bn.reserved_qty, (bn.actual_qty - bn.reserved_qty) as rem_qty,it.group,it.sub_group from `tabBin` bn inner join `tabItem` it on it.name = bn.item_code where bn.actual_qty > 0 {cond}
+    """.format(cond=cond),as_dict=1)
     return available_item
 
 # ---------------------support function-------------------------------
