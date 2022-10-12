@@ -311,7 +311,7 @@ def get_invoiced_contact_v2(item):
                 sii.item_name,
                 si.customer,
                 c.customer_name,                
-                IF(cc.last_name is not NULL, CONCAT(cc.first_name, ' ',cc.last_name), cc.first_name) as contact_name,
+                cc.first_name as contact_name,
                 cp.phone
                 from
                 `tabSales Invoice Item` sii
@@ -363,7 +363,7 @@ def get_subgroup_contact(item):
             data = frappe.db.sql("""
                 select
                 cp.phone,
-                IF(cc.last_name is not NULL, CONCAT(cc.first_name, ' ',cc.last_name), cc.first_name) as contact_name
+                cc.first_name as contact_name
                 from
                 `tabContact Phone` cp
                 left join `tabDynamic Link` cdl on cp.parent = cdl.parent
@@ -381,7 +381,7 @@ def get_standalone_contact(item):
     data = frappe.db.sql("""
         select
         cp.phone,
-        IF(cc.last_name is not NULL, CONCAT(cc.first_name,' ',cc.last_name), cc.first_name) as contact_name
+        cc.first_name as contact_name
         from
         `tabContact Phone` cp
         left join `tabDynamic Link` cdl on cp.parent = cdl.parent
@@ -438,7 +438,7 @@ def get_subgroup_contact_v2(item):
         data = frappe.db.sql("""
             select
             cp.phone,
-            IF(cc.last_name is not NULL, CONCAT(cc.first_name, ' ',cc.last_name), cc.first_name) as contact_name
+            cc.first_name as contact_name
             from
             `tabContact Phone` cp
             left join `tabDynamic Link` cdl on cp.parent = cdl.parent
