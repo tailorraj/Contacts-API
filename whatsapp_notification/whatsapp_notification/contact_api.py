@@ -205,7 +205,7 @@ def get_invoiced_contact(item):
         sii.item_name,
         si.customer,
         c.customer_name,        
-        IF(cc.last_name is not NULL, CONCAT(cc.first_name, ' ',cc.last_name), cc.first_name) as contact_name,
+        cc.first_name as contact_name,
         cp.phone
         from
         `tabSales Invoice Item` sii
@@ -244,7 +244,7 @@ def get_subgroup_invoiced_contact(item):
                 si.customer,
                 c.customer_name,
                 
-                IF(cc.last_name is not NULL, CONCAT(cc.first_name, ' ',cc.last_name), cc.first_name) as contact_name,
+                cc.first_name as as contact_name,
                 cp.phone
                 from
                 `tabSales Invoice Item` sii
